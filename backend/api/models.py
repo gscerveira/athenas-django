@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 
 class Pessoa(models.Model):
     SEXO_CHOICES = (
@@ -15,7 +16,7 @@ class Pessoa(models.Model):
     
     def calcular_peso_ideal(self):
         if self.sexo == 'M':
-            return (72.7 * self.altura) - 58
+            return (Decimal('72.7') * self.altura) - Decimal('58')
         if self.sexo == 'F':
-            return (62.1 * self.altura) - 44.7
+            return (Decimal('62.1') * self.altura) - Decimal('44.7')
         
