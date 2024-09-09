@@ -11,4 +11,18 @@ class PessoaViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.service.list()
     
+    def perform_create(self, serializer):
+        return self.service.create(serializer.validated_data)
     
+    def perform_update(self, serializer):
+        return self.service.update(serializer.instance.id, serializer.validated_data)
+    
+    def perform_destroy(self, instance):
+        return self.service.delete(instance.id)
+    
+    @action(detail=True)
+    def peso_ideal(self, request, pk=None):
+        peso_ideal = self.service.calcular_peso_ideal(pk)
+        if peso_ideal is not None:
+            return Response({'peso_ideal': peso_ideal})
+        return Response(status=status.HTTP_404_NOT_FOUND)
