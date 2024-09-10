@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import PessoaSerializer
@@ -7,6 +7,8 @@ from .services import Service
 class PessoaViewSet(viewsets.ModelViewSet):
     serializer_class = PessoaSerializer
     service = Service()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['nome']
     
     def get_queryset(self):
         return self.service.list()
